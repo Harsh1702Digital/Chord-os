@@ -26,10 +26,13 @@ export async function GET() {
 // POST /api/harmony-core/assignments — upsert or delete an assignment
 // body: { person_id, brand_id, role_type, action: 'assign' | 'unassign' }
 export async function POST(req: Request) {
-  const { person: me, unauth } = await getAuthedPerson('access_tier');
+  const { person: me, unauth } = await getAuthedPerson('access_tier, harmony_core_enabled');
   if (unauth) return unauth;
 
-  if ((me as any)?.access_tier !== 'admin') {
+  const isAdmin = (me as any)?.access_tier === 'admin';
+  const isHarmonyUser = !!(me as any)?.harmony_core_enabled;
+
+  if (!isAdmin && !isHarmonyUser) {
     return NextResponse.json({ error: 'forbidden' }, { status: 403 });
   }
 
@@ -37,6 +40,14 @@ export async function POST(req: Request) {
   if (!person_id || !brand_id) return NextResponse.json({ error: 'missing fields' }, { status: 400 });
 
   const admin = createAdminClient();
+
+  // Non-admin harmony users can only assign harmony_core_enabled people
+  if (!isAdmin) {
+    const { data: target } = await admin.from('people').select('harmony_core_enabled').eq('id', person_id).maybeSingle();
+    if (!target?.harmony_core_enabled) {
+      return NextResponse.json({ error: 'forbidden' }, { status: 403 });
+    }
+  }
 
   const [{ data: person }, { data: brand }] = await Promise.all([
     admin.from('people').select('name').eq('id', person_id).maybeSingle(),
