@@ -1,7 +1,7 @@
 # ChordOS — Knowledge Transfer Document
 
 **App name in code:** `harmony`  
-**Production URL:** `https://chord-os.theampmworld.com`  
+**Production URL:** `https://harmony1-rho.vercel.app`  
 **Stack:** Next.js 15 App Router · TypeScript · Supabase · Anthropic Claude · Tailwind v4  
 **Slack workspace:** `edernityteam.slack.com` · `#chord-os`  
 **Last updated:** 2026-09-28
@@ -50,14 +50,16 @@ The product has two separate user flows with separate auth:
 
 From `docs/accounts.md`:
 
-| Service | Account | Notes |
-|---|---|---|
-| **Vercel** | vivekpraja007@gmail.com | Hosts both prod + staging |
-| **Supabase (prod)** | hi@ampmnetwork.com | RLS enabled, `main` branch |
-| **Supabase (staging)** | vivek.prajapati@1702digital.com | Separate project, RLS disabled |
-| **Slack OAuth** | vivek.prajapati@1702digital.com | `edernityteam` workspace |
-| **Google Calendar** | vivek.prajapati@1702digital.com | Calendar integration |
-| **GitHub** | vivek.prajapati@1702digital.com | Repo owner |
+| Service | Old Account | Current Account | Notes |
+|---|---|---|---|
+| **Vercel** | vivekpraja007@gmail.com | harsh.vyas@1702digital.com | Transferred Sep 2026 |
+| **GitHub** | vivekprajapati-cmd | harsh.vyas@1702digital.com | Repo transferred Sep 2026 |
+| **Supabase (prod)** | — | hi@ampmnetwork.com | No change — always was this account |
+| **Supabase (staging)** | — | vivek.prajapati@1702digital.com | No change — RLS disabled |
+| **Slack OAuth app** | vivek.prajapati@1702digital.com (owner) | harsh.vyas@1702digital.com (collaborator) | `edernityteam` workspace · App ID: A0B7QGG5KMX · credentials unchanged |
+| **Google Cloud Console** | vivek.prajapati@1702digital.com | harsh.vyas@1702digital.com (owner) | Transferred via IAM Sep 2026 — GCal + Forms OAuth |
+| **cronjob.org** | vivek.prajapati@1702digital.com | harsh.vyas@1702digital.com | Transferred Sep 2026 — 2 jobs recreated |
+| **Production URL** | `https://chord-os.theampmworld.com` | `https://harmony1-rho.vercel.app` | Changed on Vercel account transfer |
 | **Google Cloud Console** | — | Add when Sheets API key is created |
 | **cronjob.org** | Not set up yet | Needed for delay-check cron in prod |
 
@@ -527,7 +529,7 @@ Harmony Core tracker updates go to `HARMONY_CORE_WEBHOOK_URL` (separate webhook)
 | `GEMINI_API_KEY` | AI second fallback | Google AI Studio (free: aistudio.google.com) |
 | `SLACK_WEBHOOK_URL` | Notifications | Incoming webhook → #chord-os |
 | `HARMONY_CORE_WEBHOOK_URL` | Notifications | Separate webhook for Harmony Core updates |
-| `NEXT_PUBLIC_APP_URL` | Yes | `https://chord-os.theampmworld.com` — used in Google OAuth redirect URI |
+| `NEXT_PUBLIC_APP_URL` | Yes | `https://harmony1-rho.vercel.app` — used in Google OAuth redirect URI |
 | `CRON_SECRET` | Cron security | Random string. All cron endpoints require `Authorization: Bearer <secret>` |
 | `GOOGLE_CLIENT_ID` | GCal + Forms | Google OAuth app client ID |
 | `GOOGLE_CLIENT_SECRET` | GCal + Forms | Google OAuth app client secret |
@@ -575,18 +577,18 @@ Run these in Supabase SQL Editor (production and staging separately):
 
 | Branch | Environment | Supabase | Slack |
 |---|---|---|---|
-| `main` | Production (`chord-os.theampmworld.com`) | Production (RLS enabled) | Notifications ON |
+| `main` | Production (`harmony1-rho.vercel.app`) | Production (RLS enabled) | Notifications ON |
 | `develop` | Staging (Vercel preview URLs) | Staging project (RLS disabled) | Notifications OFF (`SLACK_WEBHOOK_URL` unset) |
 
 **Cron setup (via cron-job.org):**
 
 | Job | URL | Schedule | Header |
 |---|---|---|---|
-| Delay check | `https://chord-os.theampmworld.com/api/cron/delay-check` | 03:30 UTC daily | `Authorization: Bearer <CRON_SECRET>` |
-| Ops reminder | `https://chord-os.theampmworld.com/api/cron/ops-reminder` | 05:00 UTC daily | `Authorization: Bearer <CRON_SECRET>` |
+| Delay check | `https://harmony1-rho.vercel.app/api/cron/delay-check` | 03:30 UTC daily | `Authorization: Bearer <CRON_SECRET>` |
+| Ops reminder | `https://harmony1-rho.vercel.app/api/cron/ops-reminder` | 05:00 UTC daily | `Authorization: Bearer <CRON_SECRET>` |
 
 **Google OAuth — must be registered in Google Cloud Console:**
-- Redirect URI: `https://chord-os.theampmworld.com/api/auth/google/callback`
+- Redirect URI: `https://harmony1-rho.vercel.app/api/auth/google/callback`
 - Also add `http://localhost:3000/api/auth/google/callback` for local dev
 
 **New people setup (after first Slack login):**
