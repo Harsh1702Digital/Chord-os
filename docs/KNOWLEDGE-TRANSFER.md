@@ -60,8 +60,6 @@ From `docs/accounts.md`:
 | **Google Cloud Console** | vivek.prajapati@1702digital.com | harsh.vyas@1702digital.com (owner) | Transferred via IAM Sep 2026 — GCal + Forms OAuth |
 | **cronjob.org** | vivek.prajapati@1702digital.com | harsh.vyas@1702digital.com | Transferred Sep 2026 — 2 jobs recreated |
 | **Production URL** | `https://chord-os.theampmworld.com` | `https://harmony1-rho.vercel.app` | Changed on Vercel account transfer |
-| **Google Cloud Console** | — | Add when Sheets API key is created |
-| **cronjob.org** | Not set up yet | Needed for delay-check cron in prod |
 
 ---
 
